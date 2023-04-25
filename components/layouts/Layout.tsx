@@ -15,7 +15,7 @@ export const Layout:FC<Props> = ( {title = 'OpenJira', children } ) => {
     return (
         <Box sx={{ flexFlow:1 }} >
             <Head>
-                <Title>{title}</Title>
+                <title>{title}</title>
             </Head>
 
             <Navbar/>
