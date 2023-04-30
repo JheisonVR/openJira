@@ -1,5 +1,7 @@
 import { Card, CardContent, CardHeader, Grid, Typography } from "@mui/material";
 import { Layout } from "../../components/layouts";
+import { ExtryList } from "../../components/ui";
+
 
 export default function Home() {
 
@@ -10,23 +12,22 @@ export default function Home() {
 
         <Grid item xs={4} >
           <Card sx={{height: 'calc(100vh - 100px)'}} >
-            <CardHeader title='pendientes' />
-
-            <CardContent>
-              
-            </CardContent>
+            <CardHeader title='pendientes' />            
+            <ExtryList status="pending" />            
           </Card>
         </Grid>
 
         <Grid item xs={4} >
           <Card sx={{height: 'calc(100vh - 100px)'}}>
             <CardHeader title='En Progreso' />
+            <ExtryList status="in-progress" />            
           </Card>
         </Grid>
 
         <Grid item xs={4} >
           <Card sx={{height: 'calc(100vh - 100px)'}}>
             <CardHeader title='Completadas' />
+            <ExtryList status="finished" />            
           </Card>
         </Grid>
 
