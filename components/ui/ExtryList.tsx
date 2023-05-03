@@ -21,9 +21,18 @@ export const ExtryList:FC<Props> = ({ status }) => {
     return (
         // TODO: Aqui haremos Drop
         <div>
-            <Paper sx={{height: 'calc(100vh - 250px)', overflow:'scroll', backgroundColor:'transparent', padding:'2px 5px'   }} >
+            <Paper 
+                sx={{
+                    height: 'calc(100vh - 250px)', 
+                    overflow:'hidden', 
+                    backgroundColor:'transparent', 
+                    padding:'2px 5px', 
+                    }}
+                elevation={2}
+                
+            >
                 {/* TODO: cambiara dependiendo si estoy haciendo drag o no */}
-                <List sx={{opacity: 1 }} >
+                <List sx={{opacity: 1,}}  >
                     {
                         entriesByStatus.map((e,i)=>(
                             <EntryCard
