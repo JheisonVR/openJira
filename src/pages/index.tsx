@@ -22,6 +22,7 @@ export default function Home() {
         <Grid item xs={4} >
           <Card sx={{height: 'calc(100vh - 100px)'}}>
             <CardHeader title='En Progreso' />
+
             <ExtryList status="in-progress" />            
           </Card>
         </Grid>
@@ -29,6 +30,7 @@ export default function Home() {
         <Grid item xs={4} >
           <Card sx={{height: 'calc(100vh - 100px)'}}>
             <CardHeader title='Completadas' />
+
             <ExtryList status="finished" />            
           </Card>
         </Grid>
