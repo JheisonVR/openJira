@@ -1,8 +1,9 @@
-import React, { FC, useReducer } from 'react'
+import React, { FC, useEffect, useReducer } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 import { EntriesContext, entriesReducer } from './'
 import { Entry } from '../../interfaces'
 import { NewEntry } from '../ui/NewEntry';
+import { entriesApi } from '../../apis';
 
 
 interface Props {
@@ -15,55 +16,45 @@ export interface EntriesState {
 }
 
 const ENTRIES_INITIAL_STATE:EntriesState = {
-    entries: [
-        {
-            _id: uuidv4(),
-            description: 'Velit Lorem commodo nostrud est laboris aliquip occaecat.',
-            status: 'in-progress',
-            createdAt: Date.now()
-        },
-        {
-            _id: uuidv4(),
-            description: 'Exercitation non sunt laboris reprehenderit.',
-            status: 'pending',
-            createdAt: Date.now() - 1000
-        },
-        {
-            _id: uuidv4(),
-            description: 'Eu id non excepteur nostrud sint fugiat laboris labore qui nisi ullamco ex.',
-            status: 'pending',
-            createdAt: Date.now() - 1000000
-        },
-        {
-            _id: uuidv4(),
-            description: 'Eiusmod laboris cillum mollit non eu sit amet consequat minim.',
-            status: 'finished',
-            createdAt: Date.now() - 10000
-        },
-    ]
+    entries: []
 }
-
 
 export const EntriesProvider:FC<Props> = ({children}) => {
 
     const [state, dispatch] = useReducer(entriesReducer, ENTRIES_INITIAL_STATE);
 
-    const addNewEntry = (description:string) => {
-        const NewEntry : Entry = {
-            _id: uuidv4(),
-            description: description,
-            createdAt: Date.now(),
-            status: 'pending'
+    const addNewEntry = async (description:string) => {
+        // const NewEntry : Entry = {
+        //     _id: uuidv4(),
+        //     description: description,
+        //     createdAt: Date.now(),
+        //     status: 'pending'
+        // }
+        try{
+            const {data} = await entriesApi.post<Entry> ('/entries', {description: description}) 
+            
+            dispatch({
+                type:'[Entry] add-Entry',
+                payload: data
+            })
+        }catch(e){
+            console.log(e)
         }
-        dispatch({
-            type:'[Entry] add-Entry',
-            payload:NewEntry
-        })
     }
 
     const updateEntry = (entry:Entry) => {
         dispatch({type:'[Entry] Entry-Updated', payload:entry})
     }
+
+
+    const refreshEntries =async () => {
+        const {data} = await entriesApi.get<Entry[]> ('/entries')
+        dispatch({type:'[Entry] Refresh-Data', payload:data})
+    }
+
+    useEffect(()=>{
+        refreshEntries()
+    },[])
 
     return (
         <EntriesContext.Provider value={{
