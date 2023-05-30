@@ -1,8 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "../../../../database";
 import { Entry, IEntry } from "../../../../models";
-import { NewEntry } from '../../../../context/ui/NewEntry';
-import { isAwaitExpression } from "typescript";
 
 type Data = 
     | {message: String}
@@ -15,6 +13,10 @@ export default function handler (req:NextApiRequest , res: NextApiResponse<Data>
             return getEntries(res)
         case 'POST':
             return postEntry(req, res)
+        case 'PUT':
+            return
+        case 'DELETE':
+            return
         default: 
             return res.status(400).json({message:'Endpoint no existe'})
     }
